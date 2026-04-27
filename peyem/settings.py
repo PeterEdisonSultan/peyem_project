@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=%q1)et1tjk@ea42@)w_^cfh-4p7-+^4d789*w@)5j5b8zgpgs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
+# For production, replace with your actual domain
+ALLOWED_HOSTS = ['your-username.pythonanywhere.com', 'www.your-username.pythonanywhere.com']
 
 
 # Application definition
@@ -142,10 +143,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # --- CONFIGURATION CORS (Pour autoriser le site externe à nous parler) ---
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False  # Désactiver en production
+CORS_ALLOWED_ORIGINS = [
+    "https://your-username.pythonanywhere.com",
+    "https://www.your-username.pythonanywhere.com",
+]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['your-username.pythonanywhere.com', 'www.your-username.pythonanywhere.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://devout-lara-acetometrically.ngrok-free.dev',
+    'https://your-username.pythonanywhere.com',
+    'https://www.your-username.pythonanywhere.com',
 ]
