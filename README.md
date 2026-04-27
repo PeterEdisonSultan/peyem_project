@@ -90,7 +90,7 @@ peyem_project/
 
 1. **Cloner le dépôt**
    ```bash
-   git clone <url-du-depot>
+   git clone https://github.com/PeterEdisonSultan/peyem_project.git
    cd peyem_project
    ```
 
@@ -102,7 +102,7 @@ peyem_project/
 
 3. **Installer les dépendances**
    ```bash
-   pip install django djangorestframework django-cors-headers
+   pip install -r requirements.txt
    ```
 
 4. **Appliquer les migrations**
