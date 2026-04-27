@@ -1,0 +1,30 @@
+/* Profile page specific styles - layout rules removed to avoid conflicts with dashboard.css */
+
+/* --- Responsive (Mobile) --- */
+@media (max-width: 992px) {
+    /* Sur mobile, caché par défaut */
+    #layoutSidenav_nav {
+        transform: translateX(-225px);
+    }
+    #layoutSidenav_content {
+        margin-left: 0;
+    }
+
+    /* Quand on clique sur le bouton en mobile, ça apparait */
+    body.sb-sidenav-toggled #layoutSidenav_nav {
+        transform: translateX(0);
+    }
+}
+
+/* --- Tes styles de cartes (Gardés tels quels) --- */
+.card {
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+    background-color: #fff;
+    border: 1px solid #e5e9f2;
+    border-radius: .2rem;
+}
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e5e9f2;
+}

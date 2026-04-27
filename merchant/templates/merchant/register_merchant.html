@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block nav_links %}
+{% endblock nav_links %}
+
+{% block title %}Inscription Marchand{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .register-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+    }
+    .invalid-feedback {
+        font-size: 0.875em;
+    }
+</style>
+
+<div class="container py-5 min-vh-100 d-flex flex-column justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            
+            <div class="text-center mb-4">
+                <a href="#" class="text-decoration-none">
+                    <h2 class="fw-bold text-dark">PEYEM</h2>
+                </a>
+            </div>
+
+            <div class="card register-card p-4 p-md-5">
+                
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold">Inscription Marchand</h3>
+                    <p class="text-muted">Créez votre compte pour commencer à encaisser</p>
+                </div>
+
+                <form class="needs-validation" method="post" novalidate id="registerForm">
+                    {% csrf_token %}
+                    
+                    {% if user_form.non_field_errors or details_form.non_field_errors %}
+                        <div class="alert alert-danger rounded-3" role="alert">
+                            <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Erreur :</strong>
+                            {{ user_form.non_field_errors }}
+                            {{ details_form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <h5 class="mb-3 text-primary border-bottom pb-2">Vos informations</h5>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="id_company_name" class="form-label fw-semibold">Nom de l'entreprise</label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg text-capitalize" 
+                                id="id_company_name" 
+                                name="company_name" 
+                                value="{{ details_form.company_name.value|default:'' }}" 
+                                required 
+                            />
+                            <div class="invalid-feedback">Nom de l'entreprise requis.</div>
+                        </div>
+                        
+                        <div class="col-sm-6">
+                            <label for="id_phone" class="form-label fw-semibold">Téléphone</label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg" 
+                                id="id_phone" 
+                                name="phone" 
+                                placeholder="Ex: 3xxxxxxx" 
+                                value="{{ details_form.phone.value|default:'' }}" 
+                                required 
+                                pattern="[34]\d{7}" 
+                            />
+                            <div class="invalid-feedback">
+                                Mauvais numéro (Doit commencer par 3 ou 4 et avoir 8 chiffres).
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="id_email" class="form-label fw-semibold">Adresse e-mail</label>
+                            <input type="email" class="form-control form-control-lg" id="id_email" name="email" placeholder="vous@exemple.com" value="{{ user_form.email.value|default:'' }}" required />
+                            <div class="invalid-feedback">Email valide requis.</div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="id_address" class="form-label fw-semibold">Adresse (Optionnel)</label>
+                            <input type="text" class="form-control form-control-lg" id="id_address" name="address" value="{{ details_form.address.value|default:'' }}" />
+                        </div>
+                    </div>
+
+                    <h5 class="mt-4 mb-3 text-primary border-bottom pb-2">Sécurité</h5>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="id_password" class="form-label fw-semibold">Mot de passe</label>
+                            <input type="password" class="form-control form-control-lg" id="id_password" name="password" required />
+                            <div class="invalid-feedback">Mot de passe requis.</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="id_password2" class="form-label fw-semibold">Confirmer</label>
+                            <input type="password" class="form-control form-control-lg" id="id_password2" name="password2" required />
+                            <div class="invalid-feedback">Confirmation requise.</div>
+                        </div>
+                    </div>
+
+                    <h5 class="mt-4 mb-3 text-primary border-bottom pb-2">Moyens de paiement</h5>
+                    
+                    <div class="bg-light p-3 rounded border mb-3">
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input payment-checkbox" type="checkbox" id="natcash" name="payment_methods" value="natcash" onclick="togglePayment('natcash')" {% if 'natcash' in details_form.payment_methods.value %}checked{% endif %}>
+                            <label class="form-check-label fw-bold" for="natcash">📱 NatCash</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input payment-checkbox" type="checkbox" id="moncash" name="payment_methods" value="moncash" onclick="togglePayment('moncash')" {% if 'moncash' in details_form.payment_methods.value %}checked{% endif %}>
+                            <label class="form-check-label fw-bold" for="moncash">📱 MonCash</label>
+                        </div>
+                        <div class="invalid-feedback" id="payment-error" style="display: none;">Veuillez sélectionner au moins un moyen.</div>
+                    </div>
+
+                    <div class="payment-form p-3 border rounded mb-3 bg-white" id="natcash-form" style="display: none; border-left: 5px solid #0d6efd !important;">
+                        <h6 class="text-primary fw-bold"><i class="bi bi-phone"></i> Détails NatCash</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="form-label small">Nom complet</label>
+                                <input type="text" class="form-control" id="id_natcash_name" name="natcash_name" value="{{ details_form.natcash_name.value|default:'' }}" />
+                                <div class="invalid-feedback">Nom requis pour Natcash.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Numéro Natcash</label>
+                                <input 
+                                    type="tel" 
+                                    class="form-control" 
+                                    id="id_natcash_number" 
+                                    name="natcash_number" 
+                                    placeholder="3..." 
+                                    value="{{ details_form.natcash_number.value|default:'' }}" 
+                                    pattern="[34]\d{7}" 
+                                />
+                                <div class="invalid-feedback">
+                                    Mauvais numéro (Doit commencer par 3 ou 4 et avoir 8 chiffres).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-form p-3 border rounded mb-3 bg-white" id="moncash-form" style="display: none; border-left: 5px solid #dc3545 !important;">
+                        <h6 class="text-danger fw-bold"><i class="bi bi-phone"></i> Détails MonCash</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="form-label small">Nom complet</label>
+                                <input type="text" class="form-control" id="id_moncash_name" name="moncash_name" value="{{ details_form.moncash_name.value|default:'' }}" />
+                                <div class="invalid-feedback">Nom requis pour Moncash.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Numéro Moncash</label>
+                                <input 
+                                    type="tel" 
+                                    class="form-control" 
+                                    id="id_moncash_number" 
+                                    name="moncash_number" 
+                                    placeholder="3..." 
+                                    value="{{ details_form.moncash_number.value|default:'' }}" 
+                                    pattern="[34]\d{7}" 
+                                />
+                                <div class="invalid-feedback">
+                                    Mauvais numéro (Doit commencer par 3 ou 4 et avoir 8 chiffres).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <button class="w-100 btn btn-primary btn-lg py-3 fw-bold shadow-sm" type="submit" id="submit-btn">
+                        S'inscrire maintenant
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        <small>Déjà un compte ? <a href="{% url 'merchant_login' %}" class="text-decoration-none">Se connecter</a></small>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %} 
+<script>
+    // 1. Gestion Affichage Paiement
+    function togglePayment(provider) {
+        const checkbox = document.getElementById(provider);
+        const container = document.getElementById(provider + '-form');
+        const nameInput = document.getElementById('id_' + provider + '_name');
+        const numberInput = document.getElementById('id_' + provider + '_number');
+
+        if (checkbox.checked) {
+            container.style.display = 'block';
+            nameInput.required = true;
+            numberInput.required = true;
+        } else {
+            container.style.display = 'none';
+            nameInput.required = false;
+            numberInput.required = false;
+            nameInput.value = '';
+            numberInput.value = '';
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        togglePayment('natcash');
+        togglePayment('moncash');
+    });
+
+    // 2. Validation Bootstrap + Vérification Paiement
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    const natcash = document.getElementById('natcash');
+                    const moncash = document.getElementById('moncash');
+                    const errorDiv = document.getElementById('payment-error');
+
+                    if (!natcash.checked && !moncash.checked) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        errorDiv.style.display = 'block';
+                    } else {
+                        errorDiv.style.display = 'none';
+                    }
+
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+{% endblock extra_js %}

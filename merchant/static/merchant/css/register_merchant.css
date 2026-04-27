@@ -1,0 +1,47 @@
+/* register_merchant.css */
+
+/* Styles personnalisés pour les formulaires de paiement */
+/* Rendre le sélecteur plus spécifique que les classes Bootstrap */
+.container .payment-form {
+    /* La propriété border-left est probablement écrasée par une règle générale */
+    background-color: #f8f9fa !important; 
+    padding: 20px !important;
+    border-radius: 10px !important;
+    margin: 15px 0 !important;
+    border-left: 4px solid #007bff !important; /* Forcer la bordure */
+    transition: all 0.3s ease;
+}
+
+/* Ces sélecteurs sont déjà forts grâce aux IDs */
+#natcash-form {
+    border-left-color: #007bff !important;
+}
+
+#moncash-form {
+    border-left-color: #28a745 !important;
+}
+
+/* Le reste du CSS ne devrait pas nécessiter de modification */
+.payment-form h5 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-check-input:checked {
+    transform: scale(1.1);
+}
+
+.payment-checkbox, .form-check-label {
+    cursor: pointer;
+}
+
+.form-check-label {
+    font-weight: 500;
+}
+
+#payment-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}

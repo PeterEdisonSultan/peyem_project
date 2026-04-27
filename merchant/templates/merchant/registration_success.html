@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 text-center" style="max-width: 600px; margin-top: 50px;">
+    
+    <div class="card p-4 shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title text-success mb-4">
+                <i class="bi bi-check-circle-fill"></i> Inscription Réussie !
+            </h1>
+            <p class="card-text lead">
+                Félicitations ! Votre profil marchand a été créé avec succès.
+            </p>
+            <p class="card-text">
+                Vous pouvez maintenant vous connecter à votre tableau de bord pour finaliser la configuration de vos paiements.
+            </p>
+            
+            <div class="mt-4">
+                <a href="{% url 'merchant_dashboard' %}" class="btn btn-primary btn-lg">
+                    Se connecter maintenant
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

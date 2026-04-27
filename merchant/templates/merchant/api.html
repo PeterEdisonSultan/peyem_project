@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header_content %}
+{% endblock header_content %}
+
+{% block content %}
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="{% url 'merchant_dashboard' %}">
+            {{ nom_entreprise|default:"Mon Entreprise" }}
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <ul class="navbar-nav ms-auto me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">   
+                    <li><a class="dropdown-item" href="{% url 'merchant_logout' %}">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Accueil</div>
+                        <a class="nav-link" href="{% url 'merchant_dashboard' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Tableau de bord
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Développeurs</div>
+                        <a class="nav-link" href="{% url 'merchant_api' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-code"></i></div> 
+                            Intégration API
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Paramètres</div>
+                        <a class="nav-link" href="{% url 'merchant_profile' %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div> 
+                            Votre profil
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4 mt-4">
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h1 class="h3">Espace Développeur</h1>
+                            <p class="text-muted small mb-0">Connectez PEYEM à votre site existant.</p>
+                        </div>
+                        <span class="badge bg-success">API v1.0 Active</span>
+                    </div>
+
+                    <div class="alert alert-light border-start-0 border-end-0 border-top-0 border-bottom-0 border-start-primary border-4 shadow-sm mb-4 bg-white">
+                        <h5 class="fw-bold text-primary mb-2"><i class="bi bi-rocket-takeoff-fill me-2"></i>Guide de Démarrage</h5>
+                        <p class="small text-muted mb-3">
+                            Suivez ces 3 étapes pour prendre en main le système :
+                        </p>
+                        <div class="row g-3">
+                            <div class="col-md-4"><div class="d-flex"><div class="shrink-0"><span class="badge bg-primary rounded-circle p-2">1</span></div><div class="grow ms-3"><h6 class="fw-bold mb-1">Clé API Disponible</h6><p class="small text-muted mb-0">Votre clé unique est générée automatiquement (à gauche). Elle est prête à être utilisée.</p></div></div></div>
+                            <div class="col-md-4"><div class="d-flex"><div class="shrink-0"><span class="badge bg-primary rounded-circle p-2">2</span></div><div class="grow ms-3"><h6 class="fw-bold mb-1">Testez & Explorez</h6><p class="small text-muted mb-0">Lancez la <strong>Boutique de Test</strong> pour voir le résultat, ou copiez le code du <strong>Starter Kit</strong> pour le modifier.</p></div></div></div>
+                            <div class="col-md-4"><div class="d-flex"><div class="shrink-0"><span class="badge bg-primary rounded-circle p-2">3</span></div><div class="grow ms-3"><h6 class="fw-bold mb-1">Intégration</h6><p class="small text-muted mb-0">Copiez le lien moteur dans votre HTML et mettez le script d'appel dans votre fonction panier.</p></div></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-5 mb-4">
+                            
+                            <div class="card mb-4 border-primary shadow-sm">
+                                <div class="card-header bg-primary text-white fw-bold"><i class="fas fa-key me-2"></i> Votre clé API et lien de boutique test</div>
+                                <div class="card-body bg-light">
+                                    <label class="small text-muted fw-bold mb-1">CLÉ PUBLIQUE (API KEY)</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control font-monospace fw-bold text-primary" id="apiKeyInput" value="{{ merchant.api_key }}" readonly style="background: white;">
+                                        <button class="btn btn-outline-primary" type="button" onclick="copyToClipboard('apiKeyInput')">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="d-grid mt-3">
+                                        <a href="{% url 'demo_boutique' %}" target="_blank" class="btn btn-success fw-bold shadow-sm">
+                                            <i class="fas fa-play-circle me-2"></i> Lancer la Boutique de Test
+                                        </a>
+                                        <small class="text-center text-muted mt-2" style="font-size: 0.75rem;">
+                                            Ouvre une simulation live connectée à votre clé.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-code me-2 text-warning"></i> Starter Kit (Code Complet)</span>
+                                    <button class="btn btn-sm btn-outline-warning" onclick="copyToClipboard('fullDemoCode')">
+                                        <i class="fas fa-copy me-1"></i> Tout Copier
+                                    </button>
+                                </div>
+                                <div class="card-body p-0 bg-dark">
+                                    <div style="height: 300px; overflow-y: auto; padding: 15px; font-size: 0.75rem;">
+<pre class="mb-0 text-light font-monospace" id="fullDemoCode" style="white-space: pre-wrap;">{% filter force_escape %}<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Démo - {{ nom_entreprise }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #f4f6f8; font-family: sans-serif; padding-top: 90px; }
+        .store-header { background-color: #111; color: white; padding: 15px 0; height: 80px; position: fixed; top:0; width:100%; z-index:1000; }
+        .store-brand { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; }
+        .store-brand span { color: #E85D04; }
+        .card { border: none; border-radius: 10px; transition: transform 0.3s; height: 100%; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card-img-top { height: 200px; object-fit: cover; }
+        .price { font-size: 1.2rem; font-weight: bold; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 350px; height: 100vh; background: white; z-index: 1050; padding: 20px; transition: right 0.3s; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .cart-sidebar.active { right: 0; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1040; display: none; }
+        .cart-overlay.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="store-header">
+        <div class="container d-flex align-items-center justify-content-between h-100">
+            <a href="#" class="store-brand">SPORT<span>509</span></a>
+            <button onclick="toggleCart()" class="btn btn-outline-light position-relative border-0">
+                <i class="bi bi-cart3 fs-5"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartBadge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <h2 class="fw-bold mb-4">Nos Produits</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Nike Air Max</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">15,000 HTG</span>
+                            <button class="btn btn-dark btn-sm" onclick="addToCart('Nike Air Max', 15000)">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Puma Rider</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">12,500 HTG</span>
+                            <button class="btn btn-dark btn-sm" onclick="addToCart('Puma Rider', 12500)">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Nike Dunk Low</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">18,000 HTG</span>
+                            <button class="btn btn-dark btn-sm" onclick="addToCart('Nike Dunk Low', 18000)">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="sidebar">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Panier</h4>
+            <button class="btn-close" onclick="toggleCart()"></button>
+        </div>
+        <div id="cartItems" class="grow overflow-auto">
+            <p class="text-muted text-center mt-5">Votre panier est vide</p>
+        </div>
+        <div class="border-top pt-3 mt-auto">
+            <div class="d-flex justify-content-between fw-bold mb-3">
+                <span>Total:</span>
+                <span id="cartTotal">0 HTG</span>
+            </div>
+            <button onclick="checkout()" id="btnPay" class="btn btn-success w-100 py-2 disabled">Payer avec PEYEM</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        const API_KEY = "{{ merchant.api_key }}"; // CLE DYNAMIQUE
+
+        function toggleCart() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function addToCart(title, price) {
+            cart.push({title, price});
+            updateUI();
+            if(!document.getElementById('sidebar').classList.contains('active')) toggleCart();
+        }
+
+        function updateUI() {
+            const list = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotal');
+            const badge = document.getElementById('cartBadge');
+            const btn = document.getElementById('btnPay');
+            
+            badge.innerText = cart.length;
+            
+            if(cart.length === 0) {
+                list.innerHTML = '<p class="text-muted text-center mt-5">Panier vide</p>';
+                btn.classList.add('disabled');
+                totalEl.innerText = "0 HTG";
+                return;
+            }
+
+            let html = '<ul class="list-group list-group-flush">';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                html += `<li class="list-group-item d-flex justify-content-between px-0">
+                    <span>${item.title}</span>
+                    <span class="fw-bold">${item.price} G</span>
+                </li>`;
+            });
+            html += '</ul>';
+            list.innerHTML = html;
+            totalEl.innerText = total.toLocaleString() + " HTG";
+            btn.classList.remove('disabled');
+        }
+
+        function checkout() {
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const desc = `Commande Sport 509 (${cart.length} articles)`;
+            
+            if(typeof Peyem !== 'undefined') {
+                Peyem.initiate(API_KEY, total, desc);
+            } else {
+                alert("Erreur: PEYEM non chargé");
+            }
+        }
+    </script>
+    
+    <script src="http://127.0.0.1:8000/static/payments/js/peyem.js"></script>
+</body>
+</html>{% endfilter %}</pre>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-light small text-muted border-top">
+                                    <i class="fas fa-info-circle me-1"></i> Copiez ce code dans un fichier <code>index.html</code> et ouvrez-le.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            
+                            <div class="card mb-4 shadow-sm border-start border-4 border-success">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-success text-white rounded-circle p-2 me-3"><i class="fas fa-link"></i></div>
+                                        <div>
+                                            <h5 class="mb-0 fw-bold">Importation du Moteur</h5>
+                                            <small class="text-muted">Étape indispensable pour connecter votre site.</small>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 bg-light rounded border mb-3 small">
+                                        Copiez ce lien et collez-le n'importe où dans votre page HTML. Il permet de <strong>communiquer avec le serveur PEYEM</strong>.
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control font-monospace bg-dark text-white border-0 small" id="scriptImport" value='<script src="http://127.0.0.1:8000/static/payments/js/peyem.js"></script>' readonly>
+                                        <button class="btn btn-outline-dark" onclick="copyToClipboard('scriptImport')"><i class="fas fa-copy"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-header bg-white fw-bold"><i class="fas fa-book-reader me-2 text-secondary"></i> Guide d'Intégration</div>
+                                <div class="card-body">
+                                    
+                                    <h5 class="text-primary mb-3">Déclencher le Paiement</h5>
+                                    
+                                    <ul class="nav nav-tabs mb-3" id="implTab" role="tablist">
+                                        <li class="nav-item" role="presentation"><button class="nav-link active" id="js-tab" data-bs-toggle="tab" data-bs-target="#js-content" type="button" role="tab">JavaScript (Panier)</button></li>
+                                        <li class="nav-item" role="presentation"><button class="nav-link" id="php-tab" data-bs-toggle="tab" data-bs-target="#php-content" type="button" role="tab">PHP / Backend</button></li>
+                                        <li class="nav-item" role="presentation"><button class="nav-link" id="simple-tab" data-bs-toggle="tab" data-bs-target="#simple-content" type="button" role="tab">Bouton Simple</button></li>
+                                    </ul>
+
+                                    <div class="tab-content" id="implTabContent">
+                                        
+                                        <div class="tab-pane fade show active" id="js-content" role="tabpanel">
+                                            <p class="small text-muted mb-2">
+                                                Copiez cette partie et mettez-la <strong>dans votre fonction de panier</strong> (là où vous validez la commande) :
+                                            </p>
+                                            <div class="bg-light p-3 rounded border">
+<pre class="mb-0 font-monospace text-dark" style="font-size: 0.8rem;">
+function validerCommande() {
+    const MA_CLE = "{{ merchant.api_key }}";
+    let total = calculerTotalPanier(); 
+    let description = "Commande Sport 509";
+    
+    // APPEL AU SYSTÈME DE PAIEMENT
+    if (typeof Peyem !== 'undefined') {
+        Peyem.initiate(MA_CLE, total, description);
+    } else {
+        alert("Erreur : Le script PEYEM n'est pas chargé.");
+    }
+}
+</pre>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="php-content" role="tabpanel">
+                                            <p class="small text-muted mb-2">
+                                                Insérez ceci dans votre page de confirmation, après avoir calculé le total en PHP :
+                                            </p>
+                                            <div class="bg-light p-3 rounded border">
+<pre class="mb-0 font-monospace text-dark" style="font-size: 0.8rem;">
+&lt;script&gt;
+  const MA_CLE = "{{ merchant.api_key }}";
+  const montantTotal = &lt;?php echo $total; ?&gt;;
+  
+  function payer() {
+      if (typeof Peyem !== 'undefined') {
+          Peyem.initiate(MA_CLE, montantTotal, "Commande PHP");
+      } else {
+          alert("Erreur : Le script PEYEM n'est pas chargé.");
+      }
+  }
+&lt;/script&gt;
+</pre>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="simple-content" role="tabpanel">
+                                            <p class="small text-muted mb-2">
+                                                Utilisez ceci pour un bouton d'achat rapide sur une page unique :
+                                            </p>
+                                            <div class="bg-light p-3 rounded border">
+<pre class="mb-0 font-monospace text-dark" style="font-size: 0.8rem;">
+&lt;button onclick="payer()"&gt;Payer 1000 HTG&lt;/button&gt;
+
+&lt;script&gt;
+  function payer() {
+      if (typeof Peyem !== 'undefined') {
+          Peyem.initiate("{{ merchant.api_key }}", 1000, "Article Test");
+      } else {
+          alert("Erreur : Le script PEYEM n'est pas chargé.");
+      }
+  }
+&lt;/script&gt;
+</pre>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4"><div class="text-muted small">Copyright &copy; PEYEM 2025</div></div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                });
+            }
+        });
+
+        // FONCTION DE COPIE CORRIGÉE
+        function copyToClipboard(elementId) {
+            var element = document.getElementById(elementId);
+            if (!element) return;
+
+            var text;
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                text = element.value;
+            } else {
+                text = element.innerText;
+            }
+
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Copié !");
+            }).catch(function(err) {
+                console.error('Erreur copie : ', err);
+                alert("Erreur de copie.");
+            });
+        }
+    </script>
+</body>
+{% endblock content %}

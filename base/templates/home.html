@@ -1,0 +1,394 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <section id="hero" class="hero section light-background">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="hero-content">
+            <h1 data-aos="fade-up" data-aos-delay="200">
+              Simplifiez vos paiements en ligne avec PEYEM
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="300">
+              Notre objectif est de créer une passerelle de paiement unifiée pensée pour les commerçants haïtiens afin de centraliser les paiements MonCash,
+              NatCash et par virements bancaires à partir d’un seul bouton de paiement intégré à votre site.
+            </p>
+            <div class="hero-cta" data-aos="fade-up" data-aos-delay="400">
+                <a href="{% url 'register_merchant' %}" class="btn-primary">S'inscrire</a>
+                <a href="{% url 'merchant_login' %}" class="btn-secondary">Se connecter</a>
+            </div>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="500">
+              <div class="stat-item">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Semaines de conception et développement</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Projet avec objectif de vraie mise sur le marché haïtien</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Prestataires intégrés (simulés)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="hero-image" data-aos="fade-left" data-aos-delay="300">
+            <img src="{% static 'img/peyem1.jpg' %}" alt="Paiement en ligne" class="img-fluid" style="max-height: 580px; width: 100%; object-fit: cover;">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #why-us .content p,
+    #why-us .feature-item p {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+    #why-us .section-title p {
+        text-align: center !important;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+  </style>
+
+
+  <section id="problematique" class="why-us section">
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Contexte & Enjeux</span>
+      <h2>La Problématique</h2>
+      <p>
+        Malgré l'essor du <strong>e-commerce</strong>, l'encaissement reste le goulot d'étranglement du e-commerce haïtien.
+      </p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row">
+        <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+          <div class="content">
+            <h2>Un écosystème fragmenté et manuel</h2>
+            <p>
+              Au cours des dernières années, le <strong>commerce en ligne</strong> en Haïti, notamment à travers les réseaux sociaux, a connu une croissance remarquable soutenue par la généralisation des <strong>smartphones</strong>, l’accès accru à <strong>Internet</strong> et l’utilisation d’applications telles que <strong>WhatsApp</strong>, <strong>Instagram</strong>, <strong>Facebook</strong> et, plus récemment, <strong>TikTok</strong>, devenues de véritables plateformes de vente pour de nombreux commerçants.
+            </p>
+            <br>
+            <p>
+              Cependant, l’essor du commerce électronique formel, c’est-à-dire la vente directe de produits et services via des sites web, reste entravé par une difficulté majeure : l’absence d’un système de paiement <strong>intégré, fluide et unifié.</strong>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+          <div class="image-wrapper">
+            <img src="{% static 'img/about/about-8.webp' %}" alt="Complexité actuelle" class="img-fluid">
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid" data-aos="fade-up" data-aos-delay="400">
+        <div class="row g-5">
+          
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-item">
+              <div class="icon-wrapper"><i class="bi bi-diagram-3"></i></div>
+              <div class="feature-content">
+                <h3>APIs Inexistantes ou Multiples</h3>
+                <p>
+                    Les développeurs font face à un vide technologique : souvent, les APIs de paiement sont inexistantes ou inaccessibles. Lorsqu'elles existent, elles obligent à intégrer laborieusement plusieurs systèmes distincts simultanément pour couvrir le marché.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-item">
+              <div class="icon-wrapper"><i class="bi bi-file-earmark-lock"></i></div>
+              <div class="feature-content">
+                <h3>Barrière Administrative (Accès API)</h3>
+                <p>
+                    L'obtention des clés API officielles auprès des grands opérateurs est un processus long, bureaucratique et souvent inaccessible pour les petites PME ou startups locales.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-item">
+              <div class="icon-wrapper"><i class="bi bi-phone-vibrate"></i></div>
+              <div class="feature-content">
+                <h3>Processus Manuel & Risqué</h3>
+                <p>
+                    Les vendeurs doivent vérifier manuellement sur leur téléphone la réception de chaque paiement. Cela entraîne des délais, des erreurs humaines et des risques de fraude.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="feature-item">
+              <div class="icon-wrapper"><i class="bi bi-shop-window"></i></div>
+              <div class="feature-content">
+                <h3>Frein au E-commerce Formel</h3>
+                <p>
+                    Faute de solution technique "clé en main" et facile à intégrer, la majorité des entrepreneurs renoncent à créer de véritables sites web transactionnels, restant confinés à la vente informelle sur les réseaux sociaux.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution" class="services section light-background">
+    
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Notre Proposition</span>
+      <h2>La Solution PEYEM</h2>
+      <p>
+        Une architecture modulaire conçue pour répondre aux besoins techniques et commerciaux de l'écosystème haïtien.
+      </p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row gy-5">
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-item">
+            <div class="service-icon"><i class="bi bi-bank"></i></div>
+            <h3>Agrégation Mobile & Bancaire</h3>
+            <p>
+                Une API centrale unifiant les portefeuilles mobiles (MonCash, NatCash) et visant l'intégration des institutions bancaires locales (Unibank, Sogebank, BUH, Capital Bank) via un protocole unique.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item">
+            <div class="service-icon"><i class="bi bi-cart-check"></i></div>
+            <h3>Expérience Client Optimisée</h3>
+            <p>
+                Une interface de caisse (Checkout) fluide qui permet aux acheteurs des sites de nos clients de finaliser leurs achats en toute confiance, quel que soit le moyen de paiement choisi.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="service-item">
+            <div class="service-icon"><i class="bi bi-code-slash"></i></div>
+            <h3>Intégration via SDK JavaScript</h3>
+            <p>
+                Une implémentation technique simple impliquant quelques lignes de code à copier, flexible et moderne. Grâce à notre SDK JavaScript, PEYEM s'intègre aisément dans des environnements variés (HTML pur, PHP, Python/Django) sans refonte du site existant.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-item">
+            <div class="service-icon"><i class="bi bi-bar-chart-line"></i></div>
+            <h3>Dashboard Analytique</h3>
+            <p>
+                Un tableau de bord complet offrant aux marchands une vue graphique des revenus, un historique filtrable des transactions en temps réel, la gestion autonome de leurs comptes ainsi qu'un portail développeur complet comprenant toutes les instructions et codes nécessaires à l'implémentation.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-item">
+            <div class="service-icon"><i class="bi bi-shield-lock"></i></div>
+            <h3>Sécurité & Confidentialité</h3>
+            <p>
+                Protection rigoureuse des échanges entre l’API et les utilisateurs grâce à des protocoles sécurisés, garantissant que les données sensibles ne transitent jamais en clair.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="service-item">
+            <div class="service-icon"><i class="bi bi-phone"></i></div>
+            <h3>Compatibilité Multi-plateforme</h3>
+            <p>
+                Une conception Responsive Design garantissant l'accessibilité du système aussi bien sur ordinateur que sur mobile pour une expérience fluide pour tous les utilisateurs.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture" class="about section">
+    
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Ingénierie</span>
+      <h2>Architecture & Réalisation</h2>
+      <p>
+        Détails techniques, choix d'implémentation et périmètre du prototype académique.
+      </p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row align-items-center mb-5">
+        
+        <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
+          <div class="content">
+            
+            <h3><i class="bi bi-layers-fill text-primary me-2"></i>Stack Technologique</h3>
+            <p>
+              Le système repose sur une architecture robuste et standardisée :
+            </p>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Backend :</strong> Framework <strong>Django</strong> (Python) pour la gestion sécurisée des données et l'API REST.</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Frontend :</strong> HTML5, CSS3, et <strong>JavaScript Vanilla</strong> (sans framework lourd) couplé à <strong>Bootstrap 5</strong> pour le responsive design.</li>
+                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Base de données :</strong> SQLite (Prototype) / Compatible PostgreSQL (Prod).</li>
+            </ul>
+
+            <div class="alert alert-light border-warning mt-4 shadow-sm" role="alert">
+                <h5 class="alert-heading fw-bold text-warning"><i class="bi bi-exclamation-triangle-fill me-2"></i>Périmètre du Prototype & Limitations</h5>
+                <hr>
+                <div class="small text-muted">
+                    <p class="mb-2">
+                        <strong>1. Simulation (Sandbox) :</strong> En raison des délais d'accès aux API réelles (MonCash/NatCash), ce projet utilise des <strong>simulateurs internes</strong> pour démontrer la faisabilité du flux financier.
+                    </p>
+                    <p class="mb-2">
+                        <strong>2. Fonctionnalités (Time-Boxing) :</strong> Certaines fonctions avancées (remboursements, reçus PDF dynamiques) ont été reportées à la version ultérieure (V2) pour prioriser le cœur du système de paiement.
+                    </p>
+                    <p class="mb-2">
+                        <strong>3. Audit de Sécurité :</strong> Bien que les protections Django (CSRF, Auth) soient actives, aucun test de pénétration rigoureux n'a été effectué pour une certification de production.
+                    </p>
+                    <p class="mb-2">
+                        <strong>4. Optimisation Interface (UI) :</strong> L'interface, bien que construite sur Bootstrap, est optimisée pour un affichage <strong>Desktop</strong>. L'adaptation complète aux mobiles et tablettes (Responsive absolu) reste à perfectionner.
+                    </p>
+                    <p class="mb-2">
+                        <strong>5. Déploiement Local :</strong> Le système n'est pas hébergé sur un serveur cloud de production. L'accès public est assuré via un <strong>tunnel sécurisé Ngrok</strong> connecté à l'environnement de développement local.
+                    </p>
+                    <p class="mb-0">
+                        <strong>6. Tests d'Intégration SDK :</strong> Le script d'intégration (bouton de paiement) fonctionne dans l'environnement de démo, mais n'a pas subi de tests extensifs de compatibilité (cross-browser) pour garantir une stabilité totale sur tout type de site tiers.
+                    </p>
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
+          <div class="image-wrapper">
+            <img src="{% static 'img/about/about-square-12.webp' %}" alt="Architecture du système" class="img-fluid rounded shadow">
+            
+            <div class="bg-light p-4 mt-4 rounded border">
+                <h5 class="fw-bold"><i class="bi bi-robot me-2"></i>Ressources & Assistance</h5>
+                <p class="small text-muted mb-3">
+                    Ce projet a été réalisé en s'appuyant sur la documentation officielle, des tutoriels (YouTube) et l'assistance d'IA génératives pour l'optimisation du code et le debugging.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-white text-dark border"><i class="bi bi-google me-1"></i>Google</span>
+                    <span class="badge bg-white text-dark border"><i class="bi bi-chat-quote-fill me-1"></i>ChatGPT</span>
+                    <span class="badge bg-white text-dark border"><i class="bi bi-code-slash me-1"></i>Copilot</span>
+                    <span class="badge bg-white text-dark border"><i class="bi bi-stars me-1"></i>Claude AI</span>
+                    <span class="badge bg-white text-dark border"><i class="bi bi-lightning-fill me-1"></i>Gemini Pro</span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row text-center mt-5 grayscale-logos" data-aos="fade-up" data-aos-delay="400">
+        <div class="col-12 mb-3"><p class="text-uppercase text-muted small fw-bold ls-1">Technologies & Outils utilisés</p></div>
+        
+        <div class="d-flex justify-content-center flex-wrap align-items-center gap-4 px-4">
+            <div class="text-center px-3">
+                <i class="fab fa-python fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">Django</div>
+            </div>
+            <div class="text-center px-3">
+                <i class="fab fa-html5 fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">HTML5</div>
+            </div>
+            <div class="text-center px-3">
+                <i class="fab fa-js fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">JavaScript</div>
+            </div>
+            <div class="text-center px-3">
+                <i class="fab fa-bootstrap fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">Bootstrap</div>
+            </div>
+            <div class="text-center px-3">
+                <i class="fas fa-robot fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">ChatGPT / Claude</div>
+            </div>
+            <div class="text-center px-3">
+                <i class="fas fa-brain fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">Gemini Pro</div>
+            </div>
+            <div class="text-center px-3">
+                <i class="fas fa-code-branch fa-3x text-muted"></i>
+                <div class="small fw-bold mt-1 text-muted">Copilot</div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <style>
+    .grayscale-logos i { transition: all 0.3s ease; opacity: 0.6; }
+    .grayscale-logos i:hover { color: var(--accent-color) !important; transform: scale(1.1); opacity: 1; }
+  </style>
+
+  <style>
+    /* 1. Force l'image en couleurs (enlève le noir et blanc) */
+    #equipe .team-member .member-img img {
+        filter: none !important;
+        transition: none !important;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* FOCUS IMPORTANT : Centre en X, et 10% du haut en Y pour avoir tête + épaules */
+        object-position: center 10%; 
+    }
+
+    /* 2. Cadre serré pour couper le bas du corps */
+    #equipe .team-member .member-img {
+        height: 260px; /* Hauteur réduite pour cadrer épaules */
+        max-width: 260px; /* Largeur max */
+        margin: 0 auto; 
+        overflow: hidden; 
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+  </style>
+
+<section id="equipe" class="team section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Équipe</span>
+      <h2>Qui est derrière Peyem ?</h2>
+      <p>
+        Le projet est développé dans le cadre du projet d'intégration des connaissances en informatique.
+      </p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row gy-5 justify-content-center">
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="team-member">
+            <div class="member-img">
+              <img src="{% static 'img/about/Peter_picture.jpg' %}" class="img-fluid" alt="Peter" loading="lazy">
+            </div>
+            
+            <div class="member-info mt-4">
+              <h4>Peter Edison Sultan</h4>
+              <span>Etudiant en dernière année en génie informatique à l'Institut des Sciences, des Technologies et des études avancées d'Haïti (ISTEAH). Responsable, concepteur & développeur du projet.</span>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}
