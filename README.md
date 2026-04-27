@@ -204,19 +204,86 @@ Ce script :
 - Validation des données d'entrée
 - Gestion sécurisée des sessions
 
-## Perspectives d'Amélioration
+## 🚀 Déploiement sur PythonAnywhere
 
-- Intégration réelle avec les APIs NatCash et MonCash
-- Système de notifications (email/SMS)
-- Analytics avancés pour les marchands
-- Support multi-devises
-- Interface mobile responsive optimisée
-- Déploiement en production avec serveurs dédiés
+### Configuration Automatisée
 
-## Contribution
+1. **Téléchargez le script de déploiement** :
+   ```bash
+   wget https://raw.githubusercontent.com/PeterEdisonSultan/peyem_project/main/deploy_pythonanywhere.sh
+   chmod +x deploy_pythonanywhere.sh
+   ```
 
-Ce projet a été développé dans le cadre du cours Application Web à l'ISTEAH. Pour toute question ou suggestion d'amélioration, veuillez contacter l'auteur.
+2. **Exécutez le script** :
+   ```bash
+   ./deploy_pythonanywhere.sh
+   ```
 
----
+3. **Configuration Web App** :
+   - Allez dans l'onglet **"Web"** de PythonAnywhere
+   - Cliquez sur **"Add a new web app"**
+   - Sélectionnez **"Manual configuration"** et **Python 3.10**
+   - Définissez le chemin du code source : `/home/votre-username/peyem_project`
+   - Définissez le fichier WSGI : `/home/votre-username/peyem_project/peyem/wsgi.py`
+   - Définissez le virtualenv : `/home/votre-username/.virtualenvs/peyem_env`
+   - Configurez les fichiers statiques :
+     - URL : `/static/`
+     - Chemin : `/home/votre-username/peyem_project/staticfiles`
 
-**Note** : Cette application est conçue pour un environnement de développement. Pour un déploiement en production, des configurations supplémentaires de sécurité et de performance sont nécessaires.
+### Configuration Manuelle (Si le script ne fonctionne pas)
+
+```bash
+# 1. Créer et activer l'environnement virtuel
+mkvirtualenv --python=python3.10 peyem_env
+workon peyem_env
+
+# 2. Cloner le dépôt
+git clone https://github.com/PeterEdisonSultan/peyem_project.git
+cd peyem_project/
+
+# 3. Installer les dépendances
+pip install -r requirements.txt
+
+# 4. Configuration de la base de données
+python manage.py migrate
+
+# 5. Créer un superutilisateur
+python manage.py createsuperuser
+
+# 6. Collecter les fichiers statiques
+python manage.py collectstatic --noinput
+
+# 7. Mettre à jour les fichiers de configuration
+sed -i 's/your-username/VOTRE_USERNAME_REEL/g' peyem/wsgi.py
+sed -i 's/your-username/VOTRE_USERNAME_REEL/g' peyem/settings_production.py
+
+# 8. Tester l'application
+python manage.py check
+```
+
+### Fichiers de Configuration
+
+- **`peyem/settings_production.py`** : Configuration de production
+- **`peyem/wsgi.py`** : Configuration WSGI pour PythonAnywhere
+- **`requirements.txt`** : Dépendances Python
+- **`deploy_pythonanywhere.sh`** : Script de déploiement automatisé
+
+### Variables à Modifier
+
+Avant le déploiement, modifiez ces valeurs dans `peyem/settings_production.py` :
+
+```python
+# Remplacez par votre nom d'utilisateur PythonAnywhere
+ALLOWED_HOSTS = ['votre-username.pythonanywhere.com']
+
+# Changez cette clé secrète !
+SECRET_KEY = 'votre-cle-secrete-unique'
+
+# Configurez l'email si nécessaire
+EMAIL_HOST_USER = 'votre-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'votre-mot-de-passe-app'
+```
+
+### URL de Production
+
+Après déploiement : `https://votre-username.pythonanywhere.com`
